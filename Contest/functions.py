@@ -1,4 +1,5 @@
-from force_resultant_calculator_functions import *
+from force_resultant_calculator_functions import vector_calculator_for_two_components,vector_calculator_for_three_components
+from unit_converter_functions import *
 
 def main():
     print("=====Welcome to Our Engineering Calculator!=====")
@@ -64,47 +65,117 @@ def main():
 
             case "5":
                 selections = """
-                        1. meters -> feet
-                        2. feet -> meters
-                        3. kilograms -> pounds
-                        4. pounds -> kilograms
-                        5. seconds -> minutes
-                        6. minutes -> seconds
-                        7. celsius -> fahrenheit
-                        8. fahrenheit -> celsius
-                        9. meters/second -> kilometers/hour
-                        10. kilometers/hour -> meters/second
-                        11. back
+                        1. Length: meters <-> feet
+                        2. Mass: kilograms <-> pounds
+                        3. Time: seconds <-> minutes
+                        4. Temperature: Celsius <-> Fahrenheit
+                        5. Speed: m/s <-> km/h
+                        6. back
                 """
                 while True:
                     print(selections)
                     selection = input("Enter your choice: ")
                     match selection:
-                        case "1":
-                            feet()
-                        case "2":
-                            meters()
-                        case "3":
-                            pounds()
-                        case "4":
-                            kilograms()
-                        case "5":
-                            minutes()
-                        case "6":
-                            seconds()
-                        case "7":
-                            fahrenheit()
-                        case "8":
-                            celsius()
-                        case "9":
-                            kilometers_per_hour()
-                        case "10":
-                            meters_per_second()
-                        case "11":
-                            break
-                        case _:
-                            print("Invalid option. Please select 1-11.")
+                        case "1": #Length
+                            length_menu = """
+                            1. meters -> feet
+                            2. feet -> meters
+                            3. back
+                            """
+                            while True:
+                                print(length_menu)
+                                conversion = input("Enter your choice: ")
+                                match conversion:
+                                    case "1":
+                                        feet()
+                                    case "2":
+                                        meters()
+                                    case "3":
+                                        break
+                                    case _:
+                                        print("Invalid option. Please select 1-3.")
+                                        
+                        case "2": #Mass
+                            mass_menu = """
+                            1. kilograms -> pounds
+                            2. pounds -> kilograms
+                            3. back
+                            """
+                            while True:
+                                print(mass_menu)
+                                conversion = input("Enter a choice: ")
+                                match conversion:
+                                    case "1":
+                                        pounds()
+                                    case "2":
+                                        kilograms()
+                                    case "3":
+                                        break 
+                                    case _: 
+                                        print("Invalid option. Please select 1-3.")
+                     
+                        case "3": #Time
+                            time_menu = """
+                            1. seconds -> minutes
+                            2. minutes -> seconds
+                            3. Back
+                            """
+                            while True:
+                                print(time_menu)
+                                choice_time = input("Enter your choice: ")
+                                match choice_time:
+                                    case "1":
+                                        minutes()
+                                    case "2":
+                                        seconds()
+                                    case "3":
+                                        break
+                                    case _:
+                                        print("Invalid option. Please select 1-3.")
+                                                   
+                        case "4":  # Temperature
+                            temp_menu = """
+                                1. Celsius -> Fahrenheit
+                                2. Fahrenheit -> Celsius
+                                3. Back
+                            """
+                            while True:
+                                print(temp_menu)
+                                choice_temp = input("Enter your choice: ")
+                                match choice_temp:
+                                    case "1":
+                                        fahrenheit()
+                                    case "2":
+                                        celsius()
+                                    case "3":
+                                        break
+                                    case _:
+                                        print("Invalid option. Please select 1-3.")
+            
+                        case "5":  # Speed
+                            speed_menu = """
+                                1. meters/second -> kilometers/hour
+                                2. kilometers/hour -> meters/second
+                                3. Back
+                            """
+                            while True:
+                                print(speed_menu)
+                                choice_speed = input("Enter your choice: ")
+                                match choice_speed:
+                                    case "1":
+                                        kilometers_per_hour()
+                                    case "2":
+                                        meters_per_second()
+                                    case "3":
+                                        break
+                                    case _:
+                                        print("Invalid option. Please select 1-3.")
+                                    case "6":
+                                        break
+                                    case _:
+                                        print("Invalid option. Please select 1-6.")
             case "6":
+                print("Exiting program. Goodbye!")
                 break
             case _:
                 print("Invalid option. Please select 1-6.")
