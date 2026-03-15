@@ -1,0 +1,14 @@
+Engineering Calculator
+
+This program is a Python-based engineering calculator that performs several common engineering computations including vector operations, quadratic equation solving, triangle analysis, force resultant calculations in 2D and 3D, and unit conversions. The program demonstrates modular programming through the use of functions, input validation, and structured data storage using dictionaries.
+
+To run:
+1. Open the program in Spyder.
+2. Run the main file.
+3. Follow the menu prompts.
+
+Example test case:
+Force Resultant → 2D forces
+Number of forces: 2
+Force1: magnitude = 20, angle = 30
+Force2: magnitude = 15, angle = 120
