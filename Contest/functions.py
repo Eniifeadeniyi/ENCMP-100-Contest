@@ -1,6 +1,6 @@
 from force_resultant_calculator_functions import vector_calculator_for_two_components,vector_calculator_for_three_components
 from unit_converter_functions import *
-
+from quadratic_equation_solver_function import *
 def main():
     print("=====Welcome to Our Engineering Calculator!=====")
     menu = """
