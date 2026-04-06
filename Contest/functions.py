@@ -2,6 +2,7 @@ from force_resultant_calculator_functions2 import vector_calculator_for_two_comp
 from unit_converter_functions import *
 from quadratic_equation_solver_function import *
 from triangle_solver2 import *
+
 def main():
     print("=====Welcome to Our Engineering Calculator!=====")
     menu = """
@@ -44,7 +45,26 @@ def main():
             case "2":
                 quadratic_equation_solver()
             case "3":
-                triangle_solver2()
+                alt = """
+                1. 3 sides
+                2. 2 sides one angle
+                3. 2 sides - right triangle
+                4. back
+                """
+                while True:
+                    print(alt)
+                    choice = input("What is your choice?")
+                    match choice:
+                        case "1":
+                            SSS()
+                        case "2":
+                            SSA1()
+                        case "3":
+                            SSA2()
+                        case "4":
+                            break 
+                        case _:
+                            print("Invalid option. Please select 1-3.")
             case "4":
                 alternatives = """
                         1. Force with two components(x,y)

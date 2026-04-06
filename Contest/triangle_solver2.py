@@ -1,51 +1,32 @@
+from force_resultant_calculator_functions0 import validate_magnitude as validate
+from force_resultant_calculator_functions0 import validate_angle
+
 import math
 import matplotlib.pyplot as plt
-def main():
- print()
- print("Please input givens for the equation")  
- print("0. 3 sides ")
- print("1. 2 sides one angle")
- print("1. 2 sides - right triangle")
- choice = int(input("What is your choice?"))
 
- if choice == 0:
-  a = int(input("What is your first side "))
-  b = int(input("What is your second side "))
-  c = int(input("What is your third side "))
-  
-  SSS(a,b,c)
- elif choice == 1 :
-  a = int(input("What is your first side "))
-  b = int(input("What is your second side "))
-  C = int(input("What is your angle "))
-  
-  SSA1(a,b,C)
- elif choice == 2:
-  a = int(input("What is your first side "))
-  b = int(input("What is your second side "))
-  SSA2(a,b)
- 
-    
-def SSS (a,b,c):
+def SSS():
+ a = validate("What is your first side ")
+ b = validate("What is your second side ")
+ c = validate("What is your third side ")
  A = math.degrees(math.acos((b**2+c**2-a**2)/(2*b*c)))
  B = math.degrees(math.acos((a**2+c**2-b**2)/(2*a*c)))
  C = math.degrees(math.acos((b**2+a**2-c**2)/(2*b*a)))
- 
  drawTriangle(a,b,c,A,B,C)
  
-def SSA1(a,b,C):
+def SSA1():
+    a = validate("What is your first side ")
+    b = validate("What is your second side ")
+    C = validate_angle("What is your angle ")
     C_rad = math.radians(C)
-    
     c = math.sqrt(a**2 + b**2 - 2*a*b*math.cos(C_rad))
-    
     A = math.degrees(math.asin(a*math.sin(C_rad)/c))
     B = 180 - A - C
-    
     drawTriangle(a,b,c,A,B,C)
     
-def SSA2(a,b):
+def SSA2():
+    a = validate("What is your first side ")
+    b = validate("What is your second side ")
     c = math.sqrt(a**2 + b**2)
-    
     C = 90
     A = math.degrees(math.asin(a/c))
     B = 90 - A
@@ -97,5 +78,3 @@ def drawTriangle(a, b, c, A, B, C):
     
 
 
-def triangle_solver2():
-    main()

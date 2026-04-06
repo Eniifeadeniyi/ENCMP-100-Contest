@@ -1,4 +1,4 @@
-from force_resultant_calculator_functions import validate_magnitude as validate
+from force_resultant_calculator_functions2 import validate_magnitude as validate
 import math
 
 def quadratic_equation_solver():

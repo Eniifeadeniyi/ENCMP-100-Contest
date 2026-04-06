@@ -3,7 +3,7 @@ from unittest.mock import patch
 from io import StringIO
 import math
 
-from force_resultant_calculator_functions import (
+from force_resultant_calculator_functions2 import (
     validate_magnitude,
     validate_angle,
     validate_integer,
@@ -12,7 +12,7 @@ from force_resultant_calculator_functions import (
 )
 
 from quadratic_equation_solver_function import quadratic_equation_solver
-from triangle_solver import triangle_solver
+from triangle_solver0 import triangle_solver
 from unit_converter_functions import *
 
 
