@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib.animation import PillowWriter
+
 
     
 
@@ -78,15 +78,10 @@ def vector_calculator_for_two_components():
     print(f"{'Magnitude(N)':<15}: {R:.2f}")
     print(f"{'Direction(°)':<15}: {direction:.2f}")
     plot_vectors_2d(two_components, Rx, Ry)
-    animate_2d_vectors(two_components)
+   
     
     
-    two_components = {
-    "F1": {"Fx": 3, "Fy": 0},
-    "F2": {"Fx": 0, "Fy": 4}
-        }
-
-    animate_2d_vectors(two_components)
+   
     
 def vector_calculator_for_three_components():
     three_components = force_collector_of_three_components()
@@ -187,61 +182,3 @@ def plot_vectors_3d(three_components, Rx, Ry, Rz):
     plt.show()
 
 
-def animate_2d_vectors(two_components, filename="force_resultant_2d.gif"):
-    fig, ax = plt.subplots()
-    ax.set_xlim(-10,10)
-    ax.set_ylim(-10,10)
-    ax.set_xlabel("X-axis")
-    ax.set_ylabel("Y-axis")
-    ax.set_title("Smooth Force Resultant Animation")
-    ax.grid(True)
-    ax.axhline(0)
-    ax.axvline(0)
-    ax.set_aspect('equal', adjustable='box') 
-    
-    arrows = []
-    arrow_labels = []
-    
-    metadata = dict(title="Force Resultand 2D", artists = "ForceCalc")
-    writer = PillowWriter(fps=15, metadata=metadata)
-    
-    forces_list = list(two_components.items())
-    Rx_cumulative, Ry_cumulative = 0, 0
-    
-    steps_per_force = 20
-    
-    with writer.saving(fig, filename, 100):
-        res_arrow = ax.arrow(0, 0, 0, 0, head_width=0.5, color='red')
-        res_text = ax.text(0, 0, "Resultant")
-        for key, value in forces_list:
-            Fx_full, Fy_full = value["Fx"], value["Fy"]
-            
-            for t in np.linspace(0,1,steps_per_force):
-                Fx = Fx_full * t
-                Fy = Fy_full * t
-                
-                if arrows:
-                    arrows[-1].remove()
-                    arrow_labels[-1].remove()
-                    
-                arrow = ax.arrow(0,0,Fx,Fy,head_width = 0.3, color = 'blue')
-                labels = ax.text(Fx,Fy,key)
-                arrows.append(arrow)
-                arrow_labels.append(labels)
-                Rx_current = Rx_cumulative + Fx
-                Ry_current = Ry_cumulative + Fy
-                
-                if 'res_arrow' in locals():
-                    res_arrow.remove()
-                    res_text.remove()
-
-                res_arrow = ax.arrow(0, 0, Rx_current, Ry_current, head_width=0.5, color='red')
-                res_text = ax.text(Rx_current, Ry_current, "Resultant")
-
-                writer.grab_frame()
-
-            # Update cumulative total after this force finishes
-            Rx_cumulative += Fx_full
-            Ry_cumulative += Fy_full
-                
-   
