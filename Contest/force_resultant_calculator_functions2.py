@@ -35,7 +35,7 @@ def validate_integer(prompt):
 def force_collector_of_two_components():
     count = validate_integer("Enter number of forces: ")
     two_components = {}
-    for i in range(2):
+    for i in range(count):
         magnitude = validate_magnitude(f"Enter magnitude(N) of Force{i+1}: ")
         angle = validate_angle(f"Enter angle(degrees) of Force{i+1}: ")
         x_component = round(magnitude * math.cos(angle), 2)
@@ -136,7 +136,7 @@ def plot_vectors_2d(two_components, Rx, Ry):
     plt.title("Force Vector Diagram")
 
     plt.show()
-    
+    plt.close('all')
 
 
 
@@ -239,6 +239,7 @@ def plot_vectors_3d(three_components, Rx, Ry, Rz):
 
     plt.tight_layout()
     plt.show()
+    plt.close('all')
 
 
 def animate_2d_vectors(two_components, filename="force_resultant_2d.gif"):
@@ -352,7 +353,7 @@ def animate_2d_vectors(two_components, filename="force_resultant_2d.gif"):
     handles.append(plt.Line2D([0], [0], color='black', linestyle='--', lw=2, label="Path"))
 
     ax.legend(handles=handles, loc='upper right')
-
+    plt.close('all')
     print(f"Animation saved as {filename}")
     
 
