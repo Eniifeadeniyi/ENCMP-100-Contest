@@ -1,6 +1,7 @@
 from force_resultant_calculator_functions import vector_calculator_for_two_components,vector_calculator_for_three_components
 from unit_converter_functions import *
 from quadratic_equation_solver_function import *
+from triangle_solver import *
 def main():
     print("=====Welcome to Our Engineering Calculator!=====")
     menu = """
@@ -170,10 +171,10 @@ def main():
                                         break
                                     case _:
                                         print("Invalid option. Please select 1-3.")
-                                    case "6":
-                                        break
-                                    case _:
-                                        print("Invalid option. Please select 1-6.")
+                        case "6":
+                            break
+                        case _:
+                            print("Invalid option. Please select 1-6.")
             case "6":
                 print("Exiting program. Goodbye!")
                 break
