@@ -1,7 +1,8 @@
 from force_resultant_calculator_functions2 import vector_calculator_for_two_components,vector_calculator_for_three_components
-from unit_converter_functions import *
-from quadratic_equation_solver_function import *
-from triangle_solver2 import *
+from unit_converter_functions import fahrenheit,feet,meters,meters_per_second,minutes,seconds,celsius,kilograms,kilometers_per_hour,pounds
+from quadratic_equation_solver_function import quadratic_equation_solver
+from triangle_solver2 import SSA1,SSA2,SSS
+from vector_calculator import dot_product,vector_magnitude,angle_between_vectors,cross_product
 
 def main():
     print("=====Welcome to Our Engineering Calculator!=====")

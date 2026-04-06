@@ -1,13 +1,26 @@
-from force_resultant_calculator_functions0 import validate_magnitude as validate
 from force_resultant_calculator_functions0 import validate_angle
 
 import math
 import matplotlib.pyplot as plt
 
+def validate(prompt):
+    while True:
+        try:
+            magnitude = float(input(prompt)) < 0
+            return magnitude
+        except ValueError:
+            print("Please enter a positive number.")
+            
 def SSS():
  a = validate("What is your first side ")
  b = validate("What is your second side ")
  c = validate("What is your third side ")
+ while a+b <= c or a+c <= b or b+c <= a:
+     print("Invalid triangle dimensions")
+     a = validate("What is your first side ")
+     b = validate("What is your second side ")
+     c = validate("What is your third side ")
+         
  A = math.degrees(math.acos((b**2+c**2-a**2)/(2*b*c)))
  B = math.degrees(math.acos((a**2+c**2-b**2)/(2*a*c)))
  C = math.degrees(math.acos((b**2+a**2-c**2)/(2*b*a)))
@@ -30,6 +43,7 @@ def SSA2():
     C = 90
     A = math.degrees(math.asin(a/c))
     B = 90 - A
+    drawTriangle(a, b, c, A, B, C)
  
 def drawTriangle(a, b, c, A, B, C):
     Ax, Ay = 0, 0

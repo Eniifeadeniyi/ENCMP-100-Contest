@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import PillowWriter
 
 
-
 def validate_magnitude(prompt):
     while True:
         try:
