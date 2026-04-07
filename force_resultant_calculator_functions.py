@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-
+from matplotlib.animation import PillowWriter
 
     
 
@@ -78,10 +78,15 @@ def vector_calculator_for_two_components():
     print(f"{'Magnitude(N)':<15}: {R:.2f}")
     print(f"{'Direction(°)':<15}: {direction:.2f}")
     plot_vectors_2d(two_components, Rx, Ry)
-   
+    animate_2d_vectors(two_components)
     
     
-   
+    two_components = {
+    "F1": {"Fx": 3, "Fy": 0},
+    "F2": {"Fx": 0, "Fy": 4}
+        }
+
+    animate_2d_vectors(two_components)
     
 def vector_calculator_for_three_components():
     three_components = force_collector_of_three_components()
@@ -124,11 +129,10 @@ def plot_vectors_2d(two_components, Rx, Ry):
 
     # Plot resultant vector
     plt.quiver(origin_x, origin_y, Rx, Ry, angles='xy', scale_units='xy', scale=1)
-    plt.text(Rx, Ry, "Resultant")
+    
 
     # Axes settings
-    plt.axhline(0)
-    plt.axvline(0)
+    
     plt.grid()
     plt.gca().set_aspect('equal', adjustable='box')
 
@@ -161,9 +165,7 @@ def plot_vectors_3d(three_components, Rx, Ry, Rz):
     ax.text(Rx, Ry, Rz, "Resultant")
 
     # Labels
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-    ax.set_zlabel('Z')
+    
 
     ax.set_title("3D Force Vector Diagram")
 
@@ -180,5 +182,14 @@ def plot_vectors_3d(three_components, Rx, Ry, Rz):
     ax.set_zlim([-max_range, max_range])
 
     plt.show()
+    
+    
+    
+
+
+
+
+
+
 
 
