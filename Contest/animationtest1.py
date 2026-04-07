@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr  6 17:33:43 2026
-
-@author: aimee
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import PillowWriter

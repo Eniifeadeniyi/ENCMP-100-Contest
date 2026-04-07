@@ -93,24 +93,23 @@ def angle_between_vectors():
     plot_angle(v1,v2,angle_deg)
 
 def vector_magnitude():
-    vectors = vector_collector()
-    v1 = vectors["Vector1"]
+    counter = validate_integer("Enter number of forces in the Vector: ")
+    vector = []
+    for j in range(counter):
+        force = validate_magnitude(f"{j+1}: ")
+        vector.append(force)
     
     mag = 0
-    for component in v1:
+    for component in vector:
         mag += component**2
     mag = math.sqrt(mag)
     
     print("\n--- Vector Magnitude ---")
-    print(f"Vector = {v1}")
+    print(f"Vector = {vector}")
     print(f"Magnitude = {mag:.2f}")
         
             
         
-        
-
-
-
 def plot_vectors_3d(v1, v2, v3):
     fig = plt.figure(figsize=(9, 7))
     ax = fig.add_subplot(111, projection='3d')
@@ -130,7 +129,7 @@ def plot_vectors_3d(v1, v2, v3):
     # Resultant (v3)
     ax.quiver(*origin, v3[0], v3[1], v3[2],
               linewidth=2, arrow_length_ratio=0.08)
-    ax.text(v3[0], v3[1], v3[2], "Resultant")
+    ax.text(v3[0], v3[1], v3[2], "Cross Product")
 #%%
     # Origin
     ax.scatter(0, 0, 0)
