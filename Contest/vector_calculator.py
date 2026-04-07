@@ -51,7 +51,7 @@ def cross_product():
     print("\n--- Cross Product Result ---")
     print(f"Vector1 = {v1}")
     print(f"Vector2 = {v2}")
-    print(f"Cross Product = [{cx}, {cy}, {cz}]")
+    print(f"Cross Product = [{cx:.0f}, {cy:.0f}, {cz:.0f}]")
 
 def angle_between_vectors():
     vectors = vector_collector()
