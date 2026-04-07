@@ -6,10 +6,13 @@ import matplotlib.pyplot as plt
 def validate(prompt):
     while True:
         try:
-            magnitude = float(input(prompt)) < 0
-            return magnitude
+            magnitude = float(input(prompt))
+            if magnitude >0:
+                return magnitude
+            else:
+               print("Please enter a positive number.") 
         except ValueError:
-            print("Please enter a positive number.")
+            print("Please enter a number.")
             
 def SSS():
  a = validate("What is your first side ")
@@ -49,46 +52,53 @@ def drawTriangle(a, b, c, A, B, C):
     Ax, Ay = 0, 0
     Bx, By = c, 0
 
-    # Coordinates of point C
-    xC = (b**2 + c**2 - a**2) / (2*c)
-    yC = math.sqrt(abs(b**2 - xC**2))
+   # Coordinates
+    Ax, Ay = 0, 0
+    Bx, By = c, 0
+    
+    xC = (b**2 + c**2 - a**2) / (2 * c)
+    yC = math.sqrt(max(0, b**2 - xC**2))
 
-    # Plot triangle
-    x = [Ax, Bx, xC, Ax]
-    y = [Ay, By, yC, Ay]
+    # Create figure
+    plt.figure(figsize=(6,6))
+    
+    # Draw triangle edges with color
+    plt.plot([Ax, Bx], [Ay, By], linewidth=2)  # AB
+    plt.plot([Bx, xC], [By, yC], linewidth=2)  # BC
+    plt.plot([xC, Ax], [yC, Ay], linewidth=2)  # CA
 
-    plt.figure()
-    plt.plot(x, y, marker='o', linewidth=2)
+    # Fill triangle lightly
+    plt.fill([Ax, Bx, xC], [Ay, By, yC], alpha=0.1)
 
-    # ---- Label vertices ----
-    plt.text(Ax, Ay, ' A', fontsize=12)
-    plt.text(Bx, By, ' B', fontsize=12)
-    plt.text(xC, yC, ' C', fontsize=12)
+    # Plot vertices
+    plt.scatter([Ax, Bx, xC], [Ay, By, yC], s=50)
 
-    # ---- Midpoints for side labels ----
-    mid_AB = ((Ax + Bx)/2, (Ay + By)/2)
-    mid_BC = ((Bx + xC)/2, (By + yC)/2)
-    mid_CA = ((xC + Ax)/2, (yC + Ay)/2)
+    # Label vertices (slightly offset for clarity)
+    plt.text(Ax, Ay-0.3, 'A', fontsize=12, ha='center')
+    plt.text(Bx, By-0.3, 'B', fontsize=12, ha='center')
+    plt.text(xC, yC+0.3, 'C', fontsize=12, ha='center')
 
-    # ---- Side labels ----
-    plt.text(mid_AB[0], mid_AB[1] - 0.3, f'c = {c:.2f}', color='blue')
-    plt.text(mid_BC[0] + 0.2, mid_BC[1], f'a = {a:.2f}', color='blue')
-    plt.text(mid_CA[0] - 1, mid_CA[1], f'b = {b:.2f}', color='blue')
+    # Label sides
+    midAB = ((Ax + Bx)/2, (Ay + By)/2)
+    midBC = ((Bx + xC)/2, (By + yC)/2)
+    midCA = ((xC + Ax)/2, (yC + Ay)/2)
+    plt.text(*midAB, f'{c}', fontsize=10, ha='center', va='bottom')
+    plt.text(*midBC, f'{a}', fontsize=10, ha='left')
+    plt.text(*midCA, f'{b}', fontsize=10, ha='right')
 
-    # ---- Angle labels ----
-    plt.text(Ax + 0.3, Ay + 0.1, f'A = {A:.1f}°', color='red')
-    plt.text(Bx - 1.0, By + 0.1, f'B = {B:.1f}°', color='red')
-    plt.text(xC - 0.4, yC -0.45, f'C = {C:.1f}°', color='red')
-
-    # ---- Styling ----
-    plt.title("Triangle Solution (Engineering Diagram)")
+    # Label angles at vertices
+    plt.text(Ax-0.3, Ay+0.1, f'{A:.1f}°', fontsize=10, color='purple')
+    plt.text(Bx+0.2, By+0.1, f'{B:.1f}°', fontsize=10, color='purple')
+    plt.text(xC, yC+0.3, f'{C:.1f}°', fontsize=10, color='purple')
+    
+    # Clean up axes
+    plt.title("Triangle", fontsize=14)
     plt.axis('equal')
-    plt.grid(True)
-
-    plt.xlabel("X")
-    plt.ylabel("Y")
+    plt.axis('off')  # removes ugly axes
 
     plt.show()
+    plt.close('all')
+
     
 
 
