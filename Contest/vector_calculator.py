@@ -118,17 +118,17 @@ def plot_vectors_3d(v1, v2, v3):
 #%%
     # Vector 1
     ax.quiver(*origin, v1[0], v1[1], v1[2],
-              linewidth=2, arrow_length_ratio=0.08)
+              linewidth=2,color = "blue", arrow_length_ratio=0.08)
     ax.text(v1[0], v1[1], v1[2], "Vector 1")
 
     # Vector 2
     ax.quiver(*origin, v2[0], v2[1], v2[2],
-              linewidth=2, arrow_length_ratio=0.08)
+              linewidth=2, color = "red", arrow_length_ratio=0.08)
     ax.text(v2[0], v2[1], v2[2], "Vector 2")
 
     # Resultant (v3)
     ax.quiver(*origin, v3[0], v3[1], v3[2],
-              linewidth=2, arrow_length_ratio=0.08)
+              linewidth=2, color = 'magenta' arrow_length_ratio=0.08)
     ax.text(v3[0], v3[1], v3[2], "Cross Product")
 #%%
     # Origin
