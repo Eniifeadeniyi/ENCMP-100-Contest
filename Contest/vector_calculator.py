@@ -1,5 +1,7 @@
 from force_resultant_calculator_functions2 import validate_integer, validate_magnitude
 import math 
+import matplotlib.pyplot as plt
+import numpy as np
 
 def vector_collector():
     counter = validate_integer("Enter number of forces per Vector: ")
@@ -47,7 +49,10 @@ def cross_product():
     cx = v1[1]*v2[2] - v1[2]*v2[1]
     cy = v1[2]*v2[0] - v1[0]*v2[2]
     cz = v1[0]*v2[1] - v1[1]*v2[0]
-
+    
+    cross = [cx,cy,cz]
+    
+    plot_vectors_3d(v1, v2, cross)
     print("\n--- Cross Product Result ---")
     print(f"Vector1 = {v1}")
     print(f"Vector2 = {v2}")
@@ -84,6 +89,8 @@ def angle_between_vectors():
     print(f"Vector1 = {v1}")
     print(f"Vector2 = {v2}")
     print(f"Angle = {angle_deg:.2f}°")
+    
+    plot_angle(v1,v2,angle_deg)
 
 def vector_magnitude():
     vectors = vector_collector()
@@ -97,6 +104,99 @@ def vector_magnitude():
     print("\n--- Vector Magnitude ---")
     print(f"Vector = {v1}")
     print(f"Magnitude = {mag:.2f}")
+        
+            
+        
+        
+
+
+
+def plot_vectors_3d(v1, v2, v3):
+    fig = plt.figure(figsize=(9, 7))
+    ax = fig.add_subplot(111, projection='3d')
+
+    origin = np.array([0, 0, 0])
+#%%
+    # Vector 1
+    ax.quiver(*origin, v1[0], v1[1], v1[2],
+              linewidth=2, arrow_length_ratio=0.08)
+    ax.text(v1[0], v1[1], v1[2], "Vector 1")
+
+    # Vector 2
+    ax.quiver(*origin, v2[0], v2[1], v2[2],
+              linewidth=2, arrow_length_ratio=0.08)
+    ax.text(v2[0], v2[1], v2[2], "Vector 2")
+
+    # Resultant (v3)
+    ax.quiver(*origin, v3[0], v3[1], v3[2],
+              linewidth=2, arrow_length_ratio=0.08)
+    ax.text(v3[0], v3[1], v3[2], "Resultant")
+#%%
+    # Origin
+    ax.scatter(0, 0, 0)
+    ax.text(0, 0, 0, 'O')
+
+    max_range = 20
+    ax.set_xlim([-max_range, max_range])
+    ax.set_ylim([-max_range, max_range])
+    ax.set_zlim([-max_range, max_range])
+
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+
+    ax.set_title("Cross Product Diagram")
+
+    ax.view_init(elev=25, azim=40)
+    plt.show()
+    
+def plot_angle(v1,v2,angle):
+    fig, ax = plt.subplots()
+    ax.set_xlim(-10, 10)
+    ax.set_ylim(-10, 10)
+    ax.set_aspect('equal')
+    ax.grid()
+
+    # Axes
+    ax.plot([-10, 10], [0, 0], color="black")
+    ax.plot([0, 0], [-10, 10], color="black")
+
+    origin = np.array([0, 0])
+  
+
+
+
+    # Plot F1 and F2 from origin
+    ax.quiver(*origin,v1[0],v1[1],
+                  angles='xy', scale_units='xy', scale=1,
+                  color="green",label = 'Vector 1')
+    plt.text(v1[0], v1[1], "Vector 1")
+    ax.quiver(*origin,v2[0],v2[1],
+                  angles='xy', scale_units='xy', scale=1,
+                  color="blue", label = 'Vector 2')
+    plt.text(v2[0], v2[1], "Vector 2")
+    
+    #Angle between F1 and F2
+    
+    ax.text(1.8, 0.5, f"{angle:.1f}°", color='red')
+
+    theta1 = np.arctan2(v1[1], v1[0])
+    theta2 = np.arctan2(v2[1], v2[0])
+
+    if theta2 < theta1:
+        theta1, theta2 = theta2, theta1
+
+    theta = np.linspace(theta1, theta2, 100)
+    r = 2
+
+    ax.plot(r*np.cos(theta), r*np.sin(theta), color='red')
+
+    
+    plt.legend
+    plt.title("Angle between vectors")
+    plt.show()
+
+
         
             
         
