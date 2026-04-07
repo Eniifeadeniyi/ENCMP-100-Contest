@@ -141,7 +141,7 @@ def plot_vectors_2d(two_components, Rx, Ry):
 
 
 
-def plot_vectors_3d_engineering(three_components, Rx, Ry, Rz):
+def plot_vectors_3d(three_components, Rx, Ry, Rz):
     fig = plt.figure(figsize=(9, 7))
     ax = fig.add_subplot(111, projection='3d')
 
@@ -357,11 +357,3 @@ def animate_2d_vectors(two_components, filename="force_resultant_2d.gif"):
     print(f"Animation saved as {filename}")
     
     
-if __name__ == "__main__":
-    test_case = {
-        "F1": {"Fx": 5, "Fy": 2, "Fz":4},
-        "F2": {"Fx": -3, "Fy": 4, "Fz":4},
-        "F3": {"Fx": 2, "Fy": -5, "Fz":4}
-    }
-
-plot_vectors_3d_engineering(test_case, 4, 1, 12)
