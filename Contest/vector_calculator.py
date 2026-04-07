@@ -135,14 +135,28 @@ def plot_vectors_3d(v1, v2, v3):
     ax.scatter(0, 0, 0)
     ax.text(0, 0, 0, 'O')
 
-    max_range = 20
+    max_range = 0
+    for i in range(len(v1)):
+        if(v1[i] > max_range):
+            max_range = v1[i] 
+        if(v2[i] > max_range):
+            max_range = v2[i] 
+        if(v3[i] > max_range):
+            max_range = v3[i]
+            
     ax.set_xlim([-max_range, max_range])
     ax.set_ylim([-max_range, max_range])
     ax.set_zlim([-max_range, max_range])
 
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-    ax.set_zlabel('Z')
+    # Axis lines
+    ax.plot([-max_range, max_range], [0, 0], [0, 0], linewidth=1, color = "black")
+    ax.plot([0, 0], [-max_range, max_range], [0, 0], linewidth=1, color = "black")
+    ax.plot([0, 0], [0, 0], [-max_range, max_range], linewidth=1, color = "black")
+
+    # Labels
+    ax.set_xlabel('X', labelpad=10)
+    ax.set_ylabel('Y', labelpad=10)
+    ax.set_zlabel('Z', labelpad=10)
 
     ax.set_title("Cross Product Diagram")
 
@@ -196,7 +210,3 @@ def plot_angle(v1,v2,angle):
     plt.show()
 
 
-        
-            
-        
-        
