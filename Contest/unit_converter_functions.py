@@ -1,5 +1,5 @@
 from force_resultant_calculator_functions2 import validate_magnitude as validate
-from triangle_solver2 import validate as validate1
+from force_resultant_calculator_functions2 import validate_magnitude2 as validate1
 def feet():
     meters = validate1("Please enter the length(m): ")
     print(f"{meters:.2f} meters is equal to {meters *3.28084 :.2f} feet.")

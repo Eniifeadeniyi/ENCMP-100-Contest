@@ -1,28 +1,17 @@
-from force_resultant_calculator_functions0 import validate_angle
+from force_resultant_calculator_functions2 import validate_angle,validate_magnitude1
 
 import math
 import matplotlib.pyplot as plt
-
-def validate(prompt):
-    while True:
-        try:
-            magnitude = float(input(prompt))
-            if magnitude >0:
-                return magnitude
-            else:
-               print("Please enter a positive number.") 
-        except ValueError:
-            print("Please enter a number.")
             
 def SSS():
- a = validate("What is your first side ")
- b = validate("What is your second side ")
- c = validate("What is your third side ")
+ a = validate_magnitude1("What is your first side ")
+ b = validate_magnitude1("What is your second side ")
+ c = validate_magnitude1("What is your third side ")
  while a+b <= c or a+c <= b or b+c <= a:
      print("Invalid triangle dimensions")
-     a = validate("What is your first side ")
-     b = validate("What is your second side ")
-     c = validate("What is your third side ")
+     a = validate_magnitude1("What is your first side ")
+     b = validate_magnitude1("What is your second side ")
+     c = validate_magnitude1("What is your third side ")
          
  A = math.degrees(math.acos((b**2+c**2-a**2)/(2*b*c)))
  B = math.degrees(math.acos((a**2+c**2-b**2)/(2*a*c)))
@@ -30,18 +19,19 @@ def SSS():
  drawTriangle(a,b,c,A,B,C)
  
 def SSA1():
-    a = validate("What is your first side ")
-    b = validate("What is your second side ")
-    C = validate_angle("What is your angle ")
-    C_rad = math.radians(C)
+    a = validate_magnitude1("What is your first side ")
+    b = validate_magnitude1("What is your second side ")
+    C_rad = validate_angle("What is your angle ")
+   
     c = math.sqrt(a**2 + b**2 - 2*a*b*math.cos(C_rad))
     A = math.degrees(math.asin(a*math.sin(C_rad)/c))
-    B = 180 - A - C
+    B = 180 - A - math.degrees(C_rad)
+    C= math.degrees(C_rad)
     drawTriangle(a,b,c,A,B,C)
     
 def SSA2():
-    a = validate("What is your first side ")
-    b = validate("What is your second side ")
+    a = validate_magnitude1("What is your first side ")
+    b = validate_magnitude1("What is your second side ")
     c = math.sqrt(a**2 + b**2)
     C = 90
     A = math.degrees(math.asin(a/c))

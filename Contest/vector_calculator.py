@@ -128,7 +128,7 @@ def plot_vectors_3d(v1, v2, v3):
 
     # Resultant (v3)
     ax.quiver(*origin, v3[0], v3[1], v3[2],
-              linewidth=2, color = 'magenta' arrow_length_ratio=0.08)
+              linewidth=2, color = 'magenta', arrow_length_ratio=0.08)
     ax.text(v3[0], v3[1], v3[2], "Cross Product")
 #%%
     # Origin
@@ -205,7 +205,7 @@ def plot_angle(v1,v2,angle):
     ax.plot(r*np.cos(theta), r*np.sin(theta), color='red')
 
     
-    plt.legend
+    plt.legend()
     plt.title("Angle between vectors")
     plt.show()
 

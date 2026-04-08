@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import PillowWriter
 
-
 def validate_magnitude(prompt):
     while True:
         try:
@@ -11,7 +10,29 @@ def validate_magnitude(prompt):
             return magnitude
         except ValueError:
             print("Please enter a number.")
+            
+def validate_magnitude1(prompt):
+    while True:
+        try:
+            magnitude = float(input(prompt))
+            if magnitude >0:
+                return magnitude
+            else:
+               print("Please enter a positive number greater than zero.") 
+        except ValueError:
+            print("Please enter a number.")
 
+def validate_magnitude2(prompt):
+    while True:
+        try:
+            magnitude = float(input(prompt))
+            if magnitude >= 0:
+                return magnitude
+            else:
+               print("Please enter a positive number.") 
+        except ValueError:
+            print("Please enter a number.")
+            
 def validate_angle(prompt):
     while True:
         try:
@@ -27,7 +48,10 @@ def validate_integer(prompt):
     while True:
         try:
             integer = int(input(prompt))
-            return integer
+            if integer > 0:
+                return integer
+            else:
+                print("Please enter a positive number greater than zero.")
         except ValueError:
             print("Please enter a whole number.")
 
@@ -35,7 +59,7 @@ def force_collector_of_two_components():
     count = validate_integer("Enter number of forces: ")
     two_components = {}
     for i in range(count):
-        magnitude = validate_magnitude(f"Enter magnitude(N) of Force{i+1}: ")
+        magnitude = validate_magnitude1(f"Enter magnitude(N) of Force{i+1}: ")
         angle = validate_angle(f"Enter angle(degrees) of Force{i+1}: ")
         x_component = round(magnitude * math.cos(angle), 2)
         y_component = round(magnitude * math.sin(angle), 2)

@@ -1,156 +1,200 @@
 import unittest
 from unittest.mock import patch
-import math
+from io import StringIO
 
-# Import all functions from your modules
-from vector_calculator import dot_product, cross_product, vector_magnitude, angle_between_vectors
+from unit_converter_functions import (
+    feet, meters, pounds, kilograms,
+    minutes, seconds, fahrenheit, celsius,
+    kilometers_per_hour, meters_per_second
+)
+
 from quadratic_equation_solver_function import quadratic_equation_solver
-from triangle_solver2 import SSS, SSA1, SSA2
-from force_resultant_calculator_functions2 import vector_calculator_for_two_components, vector_calculator_for_three_components
-from unit_converter_functions import feet, meters, pounds, kilograms, minutes, seconds, fahrenheit, celsius, kilometers_per_hour, meters_per_second
+from vector_calculator import (
+    dot_product, vector_magnitude,
+    angle_between_vectors, cross_product
+)
+from force_resultant_calculator_functions2 import (
+    validate_magnitude, validate_integer,
+    validate_magnitude2,
+    vector_calculator_for_two_components, vector_calculator_for_three_components,
+    validate_magnitude1,validate_angle
+)
+from triangle_solver2 import SSS, SSA2, SSA1
 
-# ---------------------------
-# Helper functions for mocks
-# ---------------------------
-
-def mock_inputs(inputs):
-    """Return a side_effect function to simulate input()."""
-    def side_effect(_):
-        return str(inputs.pop(0))
-    return side_effect
-
-# ---------------------------
-# Unit Tests
-# ---------------------------
 
 class TestEngineeringCalculator(unittest.TestCase):
 
-    # ---------------------------
-    # Vector Calculator Tests
-    # ---------------------------
-    @patch("builtins.input", side_effect=mock_inputs([3, 1, 2, 3, 4, 5, 6]))
-    def test_dot_product(self, mock_input):
-        # Should compute dot product of v1=[1,2,3], v2=[4,5,6] -> 32
-        with patch("builtins.print") as mock_print:
-            dot_product()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue(any("Dot Product = 32" in p for p in printed))
+    # =========================
+    # VALIDATION TESTS
+    # =========================
+    @patch('builtins.input', side_effect=['-5', 'abc', '10'])
+    def test_validate_magnitude_retry(self, mock_input):
+        self.assertEqual(validate_magnitude(""), -5.0)
 
-    @patch("builtins.input", side_effect=mock_inputs([1,2,3,4,5,6]))
-    def test_cross_product(self, mock_input):
-        # v1=[1,2,3], v2=[4,5,6] -> cross product = [-3,6,-3]
-        with patch("builtins.print") as mock_print:
-            cross_product()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue(any("Cross Product = [-3, 6, -3]" in p for p in printed))
+    @patch('builtins.input', side_effect=['0', 'hello', '5'])
+    def test_validate_integer_retry(self, mock_input):
+        self.assertEqual(validate_integer(""), 5)
+    
+    @patch('builtins.input', side_effect=['-2', 'hello', '5'])
+    def test_validate_magnitude1_retry(self, mock_input):
+        self.assertEqual(validate_magnitude1(""), 5.0)
+        
+    @patch('builtins.input', side_effect=['370', 'hello', '45'])
+    def test_validate_angle_retry(self, mock_input):
+        self.assertEqual(validate_angle(""), 0.7853981633974483)
+    
+    @patch('builtins.input', side_effect=['0', 'hello', '45'])
+    def test_validate_magnitude2_retry(self, mock_input):
+        self.assertEqual(validate_magnitude2(""), 0)
 
-    @patch("builtins.input", side_effect=mock_inputs([3, 1,0,0, 0,1,0]))
-    def test_vector_magnitude(self, mock_input):
-        with patch("builtins.print") as mock_print:
-            vector_magnitude()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue(any("Magnitude = 1.00" in p for p in printed))
-
-    @patch("builtins.input", side_effect=mock_inputs([3, 1,0,0, 0,1,0]))
-    def test_angle_between_vectors(self, mock_input):
-        with patch("builtins.print") as mock_print:
-            angle_between_vectors()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue(any("Angle = 90.00" in p for p in printed))
-
-    # ---------------------------
-    # Quadratic Solver Tests
-    # ---------------------------
-    @patch("builtins.input", side_effect=mock_inputs([1, -3, 2]))
-    def test_quadratic_two_roots(self, mock_input):
-        with patch("builtins.print") as mock_print:
-            quadratic_equation_solver()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue(any("x are 2.00 and 1.00" in p for p in printed))
-
-    @patch("builtins.input", side_effect=mock_inputs([1, 2, 1]))
-    def test_quadratic_one_root(self, mock_input):
-        with patch("builtins.print") as mock_print:
-            quadratic_equation_solver()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue(any("one real solution: x = -1.00" in p for p in printed))
-
-    @patch("builtins.input", side_effect=mock_inputs([1, 1, 1]))
-    def test_quadratic_no_real(self, mock_input):
-        with patch("builtins.print") as mock_print:
-            quadratic_equation_solver()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue(any("no real solutions" in p for p in printed))
-
-    # ---------------------------
-    # Triangle Solver Tests
-    # ---------------------------
-    @patch("builtins.input", side_effect=mock_inputs([3,4,5]))
-    def test_SSS_triangle(self, mock_input):
-        with patch("matplotlib.pyplot.show"):
-            # Should run without error
-            SSS()
-
-    @patch("builtins.input", side_effect=mock_inputs([3,4,30]))
-    def test_SSA1_triangle(self, mock_input):
-        with patch("matplotlib.pyplot.show"):
-            SSA1()
-
-    @patch("builtins.input", side_effect=mock_inputs([3,4]))
-    def test_SSA2_triangle(self, mock_input):
-        with patch("matplotlib.pyplot.show"):
-            SSA2()
-
-    # ---------------------------
-    # Force Resultant Calculator Tests
-    # ---------------------------
-    @patch("builtins.input", side_effect=mock_inputs([2, 10, 0, 20, 90]))
-    def test_vector_calculator_for_two_components(self, mock_input):
-        with patch("builtins.print") as mock_print, patch("matplotlib.pyplot.show"):
-            vector_calculator_for_two_components()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue(any("Resultant Force:" in p for p in printed))
-
-    @patch("builtins.input", side_effect=mock_inputs([2, 1,2,3, 4,5,6]))
-    def test_vector_calculator_for_three_components(self, mock_input):
-        with patch("builtins.print") as mock_print, patch("matplotlib.pyplot.show"):
-            vector_calculator_for_three_components()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue(any("Resultant Force" in p for p in printed))
-
-    # ---------------------------
-    # Unit Converter Tests
-    # ---------------------------
-    @patch("builtins.input", side_effect=mock_inputs([1]))
-    def test_feet_meters_conversion(self, mock_input):
-        with patch("builtins.print") as mock_print:
+    # =========================
+    # UNIT CONVERTER TESTS
+    # =========================
+    @patch('builtins.input', side_effect=['10'])
+    def test_meters_to_feet(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
             feet()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue("meters is equal to" in printed[0])
+            self.assertIn("32.81", fake_out.getvalue())
 
-    @patch("builtins.input", side_effect=mock_inputs([3]))
-    def test_minutes_seconds_conversion(self, mock_input):
-        with patch("builtins.print") as mock_print:
+    @patch('builtins.input', side_effect=['25'])
+    def test_feet_to_meters(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            meters()
+            self.assertIn("7.62", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['50'])
+    def test_kg_to_pounds(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            pounds()
+            self.assertIn("110.23", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['100'])
+    def test_pounds_to_kg(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            kilograms()
+            self.assertIn("45.36", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['120'])
+    def test_seconds_to_minutes(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
             minutes()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue("seconds is equal to" in printed[0])
+            self.assertIn("2.00", fake_out.getvalue())
 
-    @patch("builtins.input", side_effect=mock_inputs([100]))
-    def test_temperature_conversion(self, mock_input):
-        with patch("builtins.print") as mock_print:
+    @patch('builtins.input', side_effect=['5'])
+    def test_minutes_to_seconds(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            seconds()
+            self.assertIn("300.00", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['100'])
+    def test_celsius_to_fahrenheit(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
             fahrenheit()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue("°C is equal to" in printed[0])
+            self.assertIn("212.00", fake_out.getvalue())
 
-    @patch("builtins.input", side_effect=mock_inputs([10]))
-    def test_speed_conversion(self, mock_input):
-        with patch("builtins.print") as mock_print:
+    @patch('builtins.input', side_effect=['212'])
+    def test_fahrenheit_to_celsius(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            celsius()
+            self.assertIn("100.00", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['10'])
+    def test_ms_to_kmh(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
             kilometers_per_hour()
-            printed = [call.args[0] for call in mock_print.call_args_list]
-            self.assertTrue("meters per second is equal" in printed[0])
+            self.assertIn("36.00", fake_out.getvalue())
 
-# ---------------------------
-# Run the tests
-# ---------------------------
+    @patch('builtins.input', side_effect=['72'])
+    def test_kmh_to_ms(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            meters_per_second()
+            self.assertIn("20.00", fake_out.getvalue())
+
+    # =========================
+    # QUADRATIC TESTS
+    # =========================
+    @patch('builtins.input', side_effect=['1', '5', '6'])
+    def test_quadratic_two_roots(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            quadratic_equation_solver()
+            self.assertIn("The values of x", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['1', '2', '1'])
+    def test_quadratic_single_root(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            quadratic_equation_solver()
+            self.assertIn("one real solution", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['1', '1', '5'])
+    def test_quadratic_no_real_roots(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            quadratic_equation_solver()
+            self.assertIn("no real solutions", fake_out.getvalue())
+
+    # =========================
+    # VECTOR TESTS
+    # =========================
+    @patch('builtins.input', side_effect=['3', '10', '20', '30'])
+    def test_vector_magnitude(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            vector_magnitude()
+            self.assertIn("37.42", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['3', '10', '20', '30', '5', '6', '7'])
+    def test_dot_product(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            dot_product()
+            self.assertIn("380", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['2', '3', '4', '4', '3'])
+    def test_angle_between_vectors(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            angle_between_vectors()
+            self.assertIn("Angle", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=['1', '0', '0', '0', '1', '0'])
+    def test_cross_product(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            cross_product()
+            self.assertIn("[0, 0, 1]", fake_out.getvalue())
+
+    # =========================
+    # TRIANGLE TESTS
+    # =========================
+    @patch('builtins.input', side_effect=['3', '4', '5'])
+    def test_triangle_sss(self, mock_input):
+        SSS()  # should run without crashing
+        
+    @patch('builtins.input', side_effect=['3', '4', '60'])
+    def test_triangle_ssa1(self, mock_input):
+        SSA1()  # should run without crashing
+
+    @patch('builtins.input', side_effect=['3', '4'])
+    def test_triangle_ssa_right(self, mock_input):
+        SSA2()  # should run without crashing
+
+    # =========================
+    # FORCE RESULTANT TESTS
+    # =========================
+    @patch('builtins.input', side_effect=[
+        '2',
+        '10', '0',
+        '10', '90'
+    ])
+    def test_force_two_components(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            vector_calculator_for_two_components()
+            self.assertIn("Magnitude", fake_out.getvalue())
+
+    @patch('builtins.input', side_effect=[
+    '3',
+    '100', '200', '150',
+    '50', '75', '125',
+    '25', '60', '40'
+    ])
+    def test_force_three_components_large(self, mock_input):
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            vector_calculator_for_three_components()
+            self.assertIn("Resultant Force", fake_out.getvalue())
 if __name__ == "__main__":
     unittest.main()
